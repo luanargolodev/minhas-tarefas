@@ -17,6 +17,8 @@ import TaskList from "./src/components/TaskList";
 import * as Animatable from "react-native-animatable";
 const AnimatedBtn = Animatable.createAnimatableComponent(TouchableOpacity);
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function App() {
   const [task, setTask] = useState([]);
   const [open, setOpen] = useState(false);
