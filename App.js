@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,26 @@ export default function App() {
   const [task, setTask] = useState([]);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    async function loadTasks() {
+      const taskStorage = await AsyncStorage.getItem("@task");
+
+      if (taskStorage) {
+        setTask(JSON.parse(taskStorage));
+      }
+    }
+
+    loadTasks();
+  }, []);
+
+  useEffect(() => {
+    async function saveTasks() {
+      await AsyncStorage.setItem("@task", JSON.stringify(task));
+    }
+
+    saveTasks();
+  }, [task]);
 
   function handleAdd() {
     if (input === "") return;
