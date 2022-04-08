@@ -18,15 +18,21 @@ import * as Animatable from "react-native-animatable";
 const AnimatedBtn = Animatable.createAnimatableComponent(TouchableOpacity);
 
 export default function App() {
-  const [task, setTask] = useState([
-    { key: 1, task: "Lembrete" },
-    { key: 2, task: "Lembrete" },
-    { key: 3, task: "Lembrete" },
-    { key: 4, task: "Lembrete" },
-    { key: 5, task: "Lembrete" },
-  ]);
+  const [task, setTask] = useState([]);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+
+  function handleAdd() {
+    if (input === "") return;
+
+    const data = {
+      key: input,
+      task: input,
+    };
+    setTask([...task, data]);
+    setOpen(false);
+    setInput("");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,7 +78,7 @@ export default function App() {
               value={input}
               onChangeText={(texto) => setInput(texto)}
             />
-            <TouchableOpacity style={styles.handleAdd}>
+            <TouchableOpacity style={styles.handleAdd} onPress={handleAdd}>
               <Text style={styles.handleAddText}>Cadastrar</Text>
             </TouchableOpacity>
           </Animatable.View>
