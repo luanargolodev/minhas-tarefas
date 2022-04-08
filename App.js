@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -25,6 +25,12 @@ export default function App() {
   function handleAdd() {
     if (input === "") return;
 
+    const find = task.find((item) => item.task === input);
+    if (find) {
+      alert("Já existe uma tarefa com esse mesmo nome.");
+      return;
+    }
+
     const data = {
       key: input,
       task: input,
@@ -33,6 +39,11 @@ export default function App() {
     setOpen(false);
     setInput("");
   }
+
+  const handleDelete = useCallback((data) => {
+    const find = task.filter((result) => result.key !== data.key);
+    setTask(find);
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +58,9 @@ export default function App() {
         showsHorizontalScrollIndicator={false}
         data={task}
         keyExtractor={(item) => String(item.key)}
-        renderItem={({ item }) => <TaskList data={item} />}
+        renderItem={({ item }) => (
+          <TaskList data={item} handleDelete={handleDelete} />
+        )}
       />
 
       <Modal animationType="slide" transparent={false} visible={open}>
