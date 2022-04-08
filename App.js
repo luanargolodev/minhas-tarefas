@@ -69,7 +69,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="171d31" barStyle="light-content" />
+      <StatusBar backgroundColor="#171d31" barStyle="light-content" />
 
       <View>
         <Text style={styles.title}>Minhas Tarefas</Text>
